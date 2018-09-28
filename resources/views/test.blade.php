@@ -86,9 +86,11 @@
                     <button onclick="logout()">结束</button>
                     <br>
                     <button onclick="checkLogin()">是否登录</button><br><br>
-                    <form action="http://192.168.3.183:8080/api/uploadFile" method="post" enctype="multipart/form-data">
+                    <form action="/api/uploadFile" method="post" enctype="multipart/form-data">
                         <input type="file" name="files" /><br>
                         <input type="text" name="buildName" id=""><br>
+                        type:<input type="text" name="type" id=""><br>
+
                         <input type="submit" value="上传dxf文件">
                     </form>
                 </div>

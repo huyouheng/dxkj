@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 use ErrorException;
+use App\Models\Files;
 
 class MediaController extends Controller
 {
@@ -28,24 +29,33 @@ class MediaController extends Controller
 			return $this->handleFailMsg(1, '上传文件不存在!');
 		}
 		$files = $request->file('files');
+		$p_name = $request->get('buildName') ?? 'underfine';
 
 		try {
 			$name = $files->getClientOriginalName();
 			$ext = $files->getClientOriginalExtension();
 			
 			if ($ext == 'dxf') {
-				$p_name = $request->get('buildName');
 
 				$path = $files->storeAs('', $name, 'users');
 				$filePath = public_path('/images/'.$path);
 				if (!self::parseDxf($filePath,$p_name)) {
 					return $this->handleFailMsg(1, '上传失败!');
 				}
-				return $this->handleSuccessMsg(0, '上传成功!', '/images/'.$path);
+				$path = '/images/'.$path;
+				//如果存在就替换
+				if (Files::isExistsDxf($p_name,'dxf')) {
+					Files::replaceDxf($p_name,$path);
+				} else { //不存在就添加
+					Files::store($p_name,'dxf',$path);
+				}
+				return $this->handleSuccessMsg(0, '上传成功!', $path);
 
 			} else {
 				if ($path = $files->storeAs('', $name, 'users')) {
-					return $this->handleSuccessMsg(0, '上传成功!', '/images/'.$path);
+					$path = '/images/'.$path;
+					Files::store($p_name,'img',$path);
+					return $this->handleSuccessMsg(0, '上传成功!', $path);
 				}
 			}
 			
@@ -81,11 +91,31 @@ class MediaController extends Controller
 	public function fetchFile(Request $request)
 	{
 		$tag = $request->get('name');
-
-		if (is_null($uri = Cache::get($tag))) {
-			return $this->handleFailMsg(1,'暂无数据!',null);
+		$buildName = $request->get('buildName');
+		$type = $request->get('type');
+		if ($type && $buildName) {
+			$result = Files::fetch($buildName,$type);
+			return $this->handleSuccessMsg(0,'获取成功',$result);
+		} else {
+			if (is_null($uri = Cache::get($tag))) {
+				return $this->handleFailMsg(1,'暂无数据!',null);
+			}
+			return $this->handleSuccessMsg(0,'获取成功!',$uri);
 		}
-		return $this->handleSuccessMsg(0,'获取成功!',$uri);
+	}
+
+	/**
+	 * 删除文件
+	 */
+	public function deleteFile(Request $request)
+	{
+		if (is_null($id = $request->get('id'))) {
+			return $this->handleFailMsg(1,'ID错误!',null);
+		}
+		if (Files::destroy($id)) {
+			return $this->handleSuccessMsg(0,'删除成功!',null);
+		}
+		return $this->handleFailMsg(1,'删除失败!',null);
 	}
 
 	public function getCacheById($id)

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 use ErrorException;
 use Cache;
+use App\Models\Files;
 
 class TestController extends Controller
 {
@@ -43,6 +44,8 @@ class TestController extends Controller
 
 		$this->isPopSmartPath();
 
+
+		return Files::get();
 		 return view('test');
 
 //		$roles = [3, 4, 5, 6];
