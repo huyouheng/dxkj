@@ -45,7 +45,7 @@ class TestController extends Controller
 		$this->isPopSmartPath();
 
 
-		return Files::get();
+		// return Files::get();
 		 return view('test');
 
 //		$roles = [3, 4, 5, 6];
