@@ -1,1 +1,0 @@
-C:\OSGeo4W64\bin\ogr2ogr -f geojson D:\project\dxkj\public\images\1538995955.geojson D:\project\dxkj\public\images\tmp.dxf
