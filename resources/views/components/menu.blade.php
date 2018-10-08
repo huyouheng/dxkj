@@ -22,11 +22,6 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('permission')}}">
-                    <i class="fa fa-paste"></i> <span>权限</span>
-                </a>
-            </li>
-            <li>
                 <a href="{{route('media-index')}}">
                     <i class="fa fa-file-text-o"></i> <span>文件管理</span>
                 </a>

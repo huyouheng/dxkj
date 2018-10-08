@@ -272,10 +272,6 @@
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="#" class="file-rename" data-toggle="modal"
-                                                   data-target="#moveModal"
-                                                   data-name="{{ $item['name'] }}">{{trans('admin.rename')}}
-                                                    & {{trans('admin.move')}}</a></li>
                                             @unless($item['isDir'])
                                                 <li>
                                                     <a href="{{ $item['download'] }}" target="_blank" class="btn-xs"><i

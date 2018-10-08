@@ -105,8 +105,8 @@
                     method: 'POST',
                     dataType: 'json',
                     data:{
-                        "username":"test",
-                        "password":"111111"
+                        "username":"admin",
+                        "password":"admin"
                     },
                     success: function(data){
                         console.log(data);
