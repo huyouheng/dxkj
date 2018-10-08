@@ -112,6 +112,7 @@ class MediaController extends Controller
 		if (is_null($id = $request->get('id'))) {
 			return $this->handleFailMsg(1,'ID错误!',null);
 		}
+		// info($id);
 		if (Files::destroy($id)) {
 			return $this->handleSuccessMsg(0,'删除成功!',null);
 		}
@@ -165,7 +166,7 @@ class MediaController extends Controller
 			$cmd = 'cd '.$path.'&& p.bat';
 			exec($cmd,$result);
 			
-			info($result);
+			// info($result);
 		} else {
 			$cmd = 'ogr2ogr -f geojson '.$newPath .' '.$tmpFile;
 			$result = shell_exec($cmd);
