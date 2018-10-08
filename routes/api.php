@@ -20,7 +20,7 @@ use Illuminate\Http\Request;
 Route::group([], function(\Illuminate\Routing\Router $route){
     $route->post('uploadFile', 'Api\MediaController@uploadFile');
     $route->get('fetchFile', 'Api\MediaController@fetchFile');
-    $route->delete('deleteFile','Api\MediaController@deleteFile');
+    $route->post('deleteFile','Api\MediaController@deleteFile');
 });
 
 /**
