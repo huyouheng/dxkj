@@ -103,9 +103,11 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="box-footer clearfix">
-                        从 <b>1</b> 到 <b>{{$users->perPage()}}</b>，总共 <b>{{$users->total()}}</b> 条
-                        <div class="pull-right">
+                    <div style="display: flex; height: 50px; line-height: 50px;">
+                        <div style="width: 500px;">
+                            从 <b>1</b> 到 <b>{{$users->perPage()}}</b>，总共 <b>{{$users->total()}}</b> 条
+                        </div>
+                        <div style="flex: 1;text-align: right;">
                             {{$users->links()}}
                         </div>
                     </div>

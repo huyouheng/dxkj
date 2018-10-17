@@ -17,12 +17,28 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
 
+                {{--<li class="dropdown user user-menu">--}}
+                    {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">--}}
+                        {{--<img src="{{url('/dist/img/user2-160x160.jpg')}}" class="user-image" alt="User Image">--}}
+                        {{--<span class="hidden-xs">@auth {{Auth::user()->name}} @endauth</span>--}}
+                        {{--<ul class="dropdown-menu">--}}
+                            {{--<li>12</li>--}}
+                        {{--</ul>--}}
+                    {{--</a>--}}
+                {{--</li>--}}
                 <li class="dropdown user user-menu">
-                    <a href="#">
+                    <!-- Menu Toggle Button -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <!-- The user image in the navbar-->
                         <img src="{{url('/dist/img/user2-160x160.jpg')}}" class="user-image" alt="User Image">
+                        <!-- hidden-xs hides the username on small devices so only the image appears. -->
                         <span class="hidden-xs">@auth {{Auth::user()->name}} @endauth</span>
                     </a>
-
+                    <ul class="dropdown-menu">
+                        <li class="user-footer text-center">
+                            <a href="/">返回前台页面</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>

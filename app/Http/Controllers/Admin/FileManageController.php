@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Util\MediaManager;
 use App\Http\Controllers\Controller;
+use App\Models\Files;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -14,23 +15,30 @@ class FileManageController extends Controller
 
 	public function index(Request $request)
 	{
-		$path = $request->get('path', '/');
-		$view = $request->get('view', 'index');
-		$manager = new MediaManager($path);
-		$collection = collect($manager->ls());
-		$perPage = 30;
-		$currentPage = LengthAwarePaginator::resolveCurrentPage() - 1;
-		$currentPageResults = $collection->slice($currentPage * $perPage, $perPage)->all();
-		$paginate = new LengthAwarePaginator($currentPageResults, count($collection), $perPage);
-		$paginate->setPath(url()->full());
 
-		return view("file.$view", [
-			'list' => $manager->ls(),
-			'paginate' => $paginate,
-			'nav' => $manager->navigation(),
-			'url' => $manager->urls(),
-			'breadcrumb' => $this->breadcrumb
-		]);
+	    $files = Files::paginate(20);
+
+        return view('file.files', [
+            'breadcrumb' => $this->breadcrumb,
+            'files' => $files
+        ]);
+//		$path = $request->get('path', '/');
+//		$view = $request->get('view', 'index');
+//		$manager = new MediaManager($path);
+//		$collection = collect($manager->ls());
+//		$perPage = 30;
+//		$currentPage = LengthAwarePaginator::resolveCurrentPage() - 1;
+//		$currentPageResults = $collection->slice($currentPage * $perPage, $perPage)->all();
+//		$paginate = new LengthAwarePaginator($currentPageResults, count($collection), $perPage);
+//		$paginate->setPath(url()->full());
+//
+//		return view("file.$view", [
+//			'list' => $manager->ls(),
+//			'paginate' => $paginate,
+//			'nav' => $manager->navigation(),
+//			'url' => $manager->urls(),
+//			'breadcrumb' => $this->breadcrumb
+//		]);
 	}
 
 	public function download(Request $request)

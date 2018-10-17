@@ -53,6 +53,14 @@
 
         })
     </script>
+    <style>
+        th, td{
+            text-align: center;
+        }
+        .pagination {
+            margin: 10px 0 !important;
+        }
+    </style>
     <div class="content">
         <div class="row">
             <div class="col-md-12">
@@ -104,9 +112,11 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="box-footer clearfix">
-                        从 <b>1</b> 到 <b>{{$roles->perPage()}}</b>，总共 <b>{{$roles->total()}}</b> 条
-                        <div class="pull-right">
+                    <div style="display: flex; height: 50px; line-height: 50px;">
+                        <div style="width: 500px;">
+                            从 <b>1</b> 到 <b>{{$roles->perPage()}}</b>，总共 <b>{{$roles->total()}}</b> 条
+                        </div>
+                        <div style="flex: 1;text-align: right;">
                             {{$roles->links()}}
                         </div>
                     </div>
