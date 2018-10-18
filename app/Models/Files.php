@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Files extends Model
 {
@@ -54,7 +55,9 @@ class Files extends Model
         if (!$r = self::find($id)) {
             return false;
         }
+        $name = $r->buildName;
+        Cache::forget($name);
         $r->delete();
-        return true;
+        return $name;
     }
 }
