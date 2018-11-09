@@ -39,15 +39,22 @@ class MediaController extends Controller
 
 				$path = $files->storeAs('', $name, 'users');
 				$filePath = public_path('/images/'.$path);
-				if (!self::parseDxf($filePath,$p_name)) {
+				if (!($result = self::parseDxf($filePath,$p_name))) {
 					return $this->handleFailMsg(1, '上传失败!');
 				}
 				$path = '/images/'.$path;
 				//如果存在就替换
-				if (Files::isExistsDxf($p_name,'dxf')) {
-					Files::replaceDxf($p_name,$path);
-				} else { //不存在就添加
-					Files::store($p_name,'dxf',$path);
+				// if (Files::isExistsDxf($p_name,'dxf')) {
+					//Files::replaceDxf($p_name,$path);
+					// Files::appendDxf($p_name,$path);
+				// } else { //不存在就添加
+					// Files::store($p_name,'dxf',$path);
+				// }
+
+				//项目二次需求,改替换为追加
+				$result = Files::store($p_name,'dxf',$path,$result);
+				if (!$result) {
+					return $this->handleFailMsg('上传失败!');
 				}
 				return $this->handleSuccessMsg(0, '上传成功!', $path);
 
@@ -97,10 +104,10 @@ class MediaController extends Controller
 			$result = Files::fetch($buildName,$type);
 			return $this->handleSuccessMsg(0,'获取成功',$result);
 		} else {
-			if (is_null($uri = Cache::get($tag))) {
+			if (is_null($uris = Files::where([['buildName',$tag],['type','dxf']])->select('buildName','geo_url')->get())) {
 				return $this->handleFailMsg(1,'暂无数据!',null);
 			}
-			return $this->handleSuccessMsg(0,'获取成功!',$uri);
+			return $this->handleSuccessMsg(0,'获取成功!',$uris);
 		}
 	}
 
@@ -159,7 +166,8 @@ class MediaController extends Controller
 		if (PHP_OS=='WINNT'){
 			$path = public_path('images');
 
-			$batContent = 'C:\OSGeo4W64\bin\ogr2ogr -f geojson '.$newPath .' '.$tmpFile;
+			// $batContent = 'C:\OSGeo4W64\bin\ogr2ogr -f geojson '.$newPath .' '.$tmpFile;
+			$batContent = 'ogr2ogr -f geojson '.$newPath .' '.$tmpFile;
 			$_batContent= str_replace('/','\\',$batContent);
 			file_put_contents($path.'/p.bat',str_replace('\\\\','\\',$_batContent));
 			
@@ -171,9 +179,9 @@ class MediaController extends Controller
 			$cmd = 'ogr2ogr -f geojson '.$newPath .' '.$tmpFile;
 			$result = shell_exec($cmd);
 		}
-		Cache::forever($p_name,'/images/'.$geoName);
+		// Cache::forever($p_name,'/images/'.$geoName);
 		// unlink($tmpFile);
-		return true;
+		return '/images/'.$geoName;
 	}
 
 }

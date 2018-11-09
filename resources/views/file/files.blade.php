@@ -42,7 +42,7 @@
                                     <td>{{$file->type}}</td>
                                     <td>{{$file->url}}</td>
                                     <td>
-                                        <a target="_blank" href="{{route('media-download')}}?file={{$file->buildName}}" class="btn btn-xs btn-info">下载</a>
+                                        <a target="_blank" href="{{$file->url}}" class="btn btn-xs btn-info">下载</a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -2,10 +2,10 @@
     <!-- Logo -->
     <a href="#" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b></b></span>
+        <span class="logo-mini" style="font-size:18px !important;"><b>奉化区</b></span>
     {{--<span class="logo-mini"><b><img src="http://www.popsmart.cn/Src/static/favicon.ico" alt=""></b></span>--}}
     <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>{{config('app.name')}}</b></span>
+        <span class="logo-lg" style="font-size:18px !important;"><b>{{config('app.name')}}</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">

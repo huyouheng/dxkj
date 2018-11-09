@@ -50,6 +50,7 @@
         @yield('content')
         @include('components.toastr')
     </div>
+    @include('components.footer');
 </div>
 <script src="{{asset('bower_components/jquery-ui/jquery-ui.min.js')}}"></script>
 <script>

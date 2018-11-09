@@ -16,7 +16,7 @@ class FileManageController extends Controller
 	public function index(Request $request)
 	{
 
-	    $files = Files::paginate(20);
+	    $files = Files::orderBy('buildName','desc')->paginate(20);
 
         return view('file.files', [
             'breadcrumb' => $this->breadcrumb,
