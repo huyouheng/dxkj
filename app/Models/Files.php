@@ -10,7 +10,7 @@ class Files extends Model
     protected $table = 'files';
 
     protected $fillable = [
-        'buildName', 'type', 'url', 'geo_url'
+        'buildName', 'type', 'url', 'geo_url','file_name'
     ];
 
     protected $hidden = [
@@ -32,13 +32,14 @@ class Files extends Model
         $dxf->save();
     }
 
-    public static function store($buildName, $type, $path, $geo_url=null)
+    public static function store($buildName, $type, $path, $geo_url=null,$file_name=null)
     {
         $result = self::create([
             'buildName' => $buildName,
             'type' => $type,
             'url' => $path,
-            'geo_url' => $geo_url
+            'geo_url' => $geo_url,
+            'file_name' => $file_name
         ]);
         if (!$result) {
             return false;

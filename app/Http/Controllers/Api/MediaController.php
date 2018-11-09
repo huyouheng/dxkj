@@ -34,9 +34,9 @@ class MediaController extends Controller
 		try {
 			$name = $files->getClientOriginalName();
 			$ext = $files->getClientOriginalExtension();
-			
+			$pathinfo = pathinfo($name);
 			if ($ext == 'dxf') {
-
+				
 				$path = $files->storeAs('', $name, 'users');
 				$filePath = public_path('/images/'.$path);
 				if (!($result = self::parseDxf($filePath,$p_name))) {
@@ -52,7 +52,8 @@ class MediaController extends Controller
 				// }
 
 				//项目二次需求,改替换为追加
-				$result = Files::store($p_name,'dxf',$path,$result);
+				$fileName = $pathinfo['filename'] ?? '';
+				$result = Files::store($p_name,'dxf',$path,$result,$fileName);
 				if (!$result) {
 					return $this->handleFailMsg('上传失败!');
 				}
@@ -104,7 +105,7 @@ class MediaController extends Controller
 			$result = Files::fetch($buildName,$type);
 			return $this->handleSuccessMsg(0,'获取成功',$result);
 		} else {
-			if (is_null($uris = Files::where([['buildName',$tag],['type','dxf']])->select('buildName','geo_url')->get())) {
+			if (is_null($uris = Files::where([['buildName',$tag],['type','dxf']])->select('file_name','geo_url')->get())) {
 				return $this->handleFailMsg(1,'暂无数据!',null);
 			}
 			return $this->handleSuccessMsg(0,'获取成功!',$uris);

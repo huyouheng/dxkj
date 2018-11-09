@@ -15,6 +15,7 @@ class AlterFilesTable extends Migration
     {
         Schema::table('files', function (Blueprint $table) {
             $table->string('geo_url')->nullable();
+            $table->string('file_name')->nullable();
         });
     }
 
@@ -27,7 +28,8 @@ class AlterFilesTable extends Migration
     {
         Schema::table('files', function (Blueprint $table) {
             //
-            $table->drop_column('geo_url');
+            $table->removeColumn('geo_url');
+            $table->removeColumn('file_name');
         });
     }
 }
